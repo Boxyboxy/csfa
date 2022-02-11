@@ -1,73 +1,102 @@
-<p>recipe-add works!</p>
-
 <div class="content">
-  <form [formGroup]="form">
-    <mat-card>
-      <div>
-        <mat-form-field>
-          <mat-label> Enter title here:&nbsp; </mat-label>
-          <input matInput formControlName="name" />
-          <mat-error
-            *ngIf="!form.get('name')?.valid && form.get('name')?.touched"
-            class="warning"
-          >
-            Please input a recipe name.
-          </mat-error>
-        </mat-form-field>
-      </div>
-
-      <div formArrayName="ingredients">
-        <Span>Ingredients: </Span>
-        <button
-          class="btn btn-default"
-          type="button"
-          (click)="onAddIngredient()"
+  <mat-card>
+    <form [formGroup]="form">
+      <mat-card-title>Title</mat-card-title>
+      <mat-form-field appearance="fill">
+        <mat-label> Enter title here:&nbsp; </mat-label>
+        <input matInput formControlName="name" />
+        <mat-error
+          *ngIf="!form.get('name')?.valid && form.get('name')?.touched"
+          class="warning"
         >
-          Add Ingredient
-        </button>
-        <div
+          Please input a recipe name.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-card-title
+        >Ingredients
+        <span>
+          <button
+            class="btn btn-default"
+            type="button"
+            (click)="onAddIngredient()"
+          >
+            Add Ingredient
+          </button>
+        </span></mat-card-title
+      >
+      <ng-container formArrayName="ingredients">
+        <mat-form-field
           class="form-group"
+          appearance="fill"
           *ngFor="
             let ingredientControl of returnFormArray(form, 'ingredients')
               .controls;
             let i = index
           "
         >
-          <mat-form-field>
-            <mat-label> Ingredient: &nbsp; </mat-label>
-            <input matInput class="form-control" [formControlName]="i" />
-          </mat-form-field>
-        </div>
-      </div>
-
-      <div>
-        <mat-form-field>
-          <mat-label> Instruction: &nbsp; </mat-label>
-          <textarea matInput formControlName="instruction"></textarea>
-          <mat-error
-            *ngIf="
-              !form.get('instruction')?.valid &&
-              form.get('instruction')?.touched
-            "
-            class="warning"
+          <mat-label> Enter ingredient here </mat-label>
+          <input matInput class="form-control" [formControlName]="i" />
+          <button
+            *ngIf="i > 0"
+            class="btn btn-default"
+            type="button"
+            matSuffix
+            (click)="removeIngredientControl(i)"
           >
-            Please input a task name.
-          </mat-error>
+            X
+          </button>
         </mat-form-field>
-      </div>
+      </ng-container>
 
-      <div>
-        <mat-form-field>
-          <mat-label> Image: &nbsp; </mat-label>
-          <input matInput formControlName="image" />
-          <mat-error
-            *ngIf="!form.get('image')?.valid && form.get('image')?.touched"
-            class="warning"
-          >
-            Please input an image url.
-          </mat-error>
-        </mat-form-field>
-      </div>
-    </mat-card>
-  </form>
+      <mat-card-title>Instruction</mat-card-title>
+      <mat-form-field>
+        <mat-label> Instruction: &nbsp; </mat-label>
+        <textarea
+          matInput
+          formControlName="instruction"
+          col="10"
+          row="10"
+        ></textarea>
+        <mat-error
+          *ngIf="
+            !form.get('instruction')?.valid && form.get('instruction')?.touched
+          "
+          class="warning"
+        >
+          Please input instruction.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-card-title>Image</mat-card-title>
+      <mat-form-field>
+        <mat-label> Image: &nbsp; </mat-label>
+        <input matInput formControlName="image" />
+        <mat-error
+          *ngIf="!form.get('image')?.valid && form.get('image')?.touched"
+          class="warning"
+        >
+          Please input an image url.
+        </mat-error>
+      </mat-form-field>
+
+      <button
+        type="button"
+        class="back"
+        title="back"
+        [routerLink]="['/', 'recipes']"
+      >
+        Back
+      </button>
+
+      <button
+        type="button"
+        class="add"
+        title="add recipe"
+        (click)="saveRecipe()"
+      >
+        Add
+      </button>
+    </form>
+  </mat-card>
 </div>

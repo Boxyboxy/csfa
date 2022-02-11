@@ -23,8 +23,10 @@ export class RecipeAddComponent implements OnInit {
 
   createForm(): FormGroup {
     return this.fb.group({
-      name: this.fb.control('', [Validators.required]),
-      ingredients: this.fb.array([new FormControl('')]),
+      name: this.fb.control('', [Validators.required, Validators.minLength(3)]),
+      ingredients: this.fb.array([
+        new FormControl('', [Validators.required, Validators.minLength(3)]),
+      ]),
       instruction: this.fb.control('', [Validators.required]),
       image: this.fb.control('', [Validators.required]),
     });
@@ -32,11 +34,20 @@ export class RecipeAddComponent implements OnInit {
 
   // add ingredient to formArray
   onAddIngredient() {
-    const control = new FormControl('', Validators.required);
+    const control = new FormControl('', [
+      Validators.minLength(3),
+      Validators.required,
+    ]);
     (<FormArray>this.form.get('ingredients')).push(control);
   }
 
   returnFormArray(form: FormGroup, key: string): FormArray {
     return form.get(key) as FormArray;
   }
+
+  removeIngredientControl(i: number) {
+    (<FormArray>this.form.get('ingredients')).removeAt(i);
+  }
+
+  saveRecipe() {}
 }
