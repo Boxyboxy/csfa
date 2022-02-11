@@ -17,15 +17,11 @@ export class RecipeService {
   getAllRecipes(): Observable<RecipeBasicDeets[]> {
     // return of(RECIPES);
 
-    return this.httpClient.get<RecipeBasicDeets[]>(
-      'http://localhost:8080/api/recipes'
-    );
+    return this.httpClient.get<RecipeBasicDeets[]>('/api/recipes');
   }
 
   getRecipe(recipeId: string): Observable<Recipe> {
-    return this.httpClient.get<Recipe>(
-      `http://localhost:8080/api/recipe/${recipeId}`
-    );
+    return this.httpClient.get<Recipe>(`/api/recipe/${recipeId}`);
   }
 
   saveRecipe(recipe: Recipe): Promise<any> {
@@ -38,11 +34,7 @@ export class RecipeService {
     };
 
     return lastValueFrom(
-      this.httpClient.post(
-        'http://localhost:8080/api/recipe',
-        recipe,
-        httpOptions
-      )
+      this.httpClient.post('/api/recipe', recipe, httpOptions)
     );
   }
 }
