@@ -1,6 +1,18 @@
-<!-- <h1>{{ recipe.name }}</h1> -->
-<!-- <img src="{{ recipe.image }}" alt="" />
-<h3>Ingredients</h3>
-<ol>
-  <li></li>
-</ol> -->
+<div *ngIf="recipe">
+  <h1>{{ recipe.name }}</h1>
+  <img src="{{ recipe.image }}" alt="" />
+  <h3>Ingredients</h3>
+  <ol class="'ingredients">
+    <li *ngFor="let ingredient of recipe.ingredients">{{ ingredient }}</li>
+  </ol>
+  <h3>Instruction</h3>
+  <p>{{ recipe.instruction }}</p>
+  <button
+    type="button"
+    class="back"
+    title="back"
+    [routerLink]="['/', 'recipes']"
+  >
+    Back
+  </button>
+</div>

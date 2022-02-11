@@ -6,6 +6,6 @@ export interface RecipeBasicDeets {
 export interface Recipe extends RecipeBasicDeets {
   title: string;
   image: string;
-  instructions: string;
+  instruction: string;
   ingredients: string[];
 }

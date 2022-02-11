@@ -7,6 +7,11 @@
   </li>
 </ul>
 
-<button type="button" class="add" title="delete hero" (click)="add()">
+<button
+  type="button"
+  class="add"
+  title="delete hero"
+  [routerLink]="['/', 'add']"
+>
   Add
 </button>

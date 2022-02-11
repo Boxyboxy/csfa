@@ -8,6 +8,9 @@ import { RecipeListComponent } from './components/recipe-list.component';
 import { RecipeDetailComponent } from './components/recipe-detail.component';
 import { RecipeAddComponent } from './components/recipe-add.component';
 import { HttpClientModule } from '@angular/common/http';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './material.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 const appRoutes: Routes = [
   { path: '', component: RecipeListComponent },
@@ -28,6 +31,9 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     ReactiveFormsModule,
     HttpClientModule,
+    NoopAnimationsModule,
+    MaterialModule,
+    FlexLayoutModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
