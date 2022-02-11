@@ -63,29 +63,13 @@ export class RecipeAddComponent implements OnInit {
     (<FormArray>this.form.get('ingredients')).removeAt(i);
   }
 
-  createId(length: number): string {
-    let result = '';
-    let characters =
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (let i = 0; i < length; i++) {
-      result += characters.charAt(
-        Math.floor(Math.random() * characters.length)
-      );
-    }
-    return result;
-  }
-
   submitForm() {
-    let recipe: Recipe = {
-      id: this.createId(5),
-      title: this.form.value.title,
-      ingredients: this.form.value.ingredients,
-      instruction: this.form.value.instruction,
-      image: this.form.value.image,
-    };
+    const recipe = this.form.value as Recipe;
 
     console.log(recipe);
-    this.recipeService.saveRecipe(recipe);
-    this.router.navigate(['/']);
+    this.recipeService.saveRecipe(recipe).then(() => {
+      this.router.navigate(['/']);
+      alert('Recipe saved!');
+    });
   }
 }

@@ -17,6 +17,4 @@ export class RecipeListComponent implements OnInit {
       .getAllRecipes()
       .subscribe((recipes) => (this.recipes = recipes));
   }
-
-  add() {}
 }
