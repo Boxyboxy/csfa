@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 
 import { Recipe } from '../models';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-recipe-add',
@@ -18,7 +19,11 @@ import { Recipe } from '../models';
 export class RecipeAddComponent implements OnInit {
   form!: FormGroup;
 
-  constructor(private fb: FormBuilder, private recipeService: RecipeService) {}
+  constructor(
+    private fb: FormBuilder,
+    private recipeService: RecipeService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.form = this.createForm();
@@ -26,7 +31,10 @@ export class RecipeAddComponent implements OnInit {
 
   createForm(): FormGroup {
     return this.fb.group({
-      name: this.fb.control('', [Validators.required, Validators.minLength(3)]),
+      title: this.fb.control('', [
+        Validators.required,
+        Validators.minLength(3),
+      ]),
       ingredients: this.fb.array([
         new FormControl('', [Validators.required, Validators.minLength(3)]),
       ]),
@@ -70,7 +78,7 @@ export class RecipeAddComponent implements OnInit {
   submitForm() {
     let recipe: Recipe = {
       id: this.createId(5),
-      title: this.form.value.name,
+      title: this.form.value.title,
       ingredients: this.form.value.ingredients,
       instruction: this.form.value.instruction,
       image: this.form.value.image,
@@ -78,5 +86,6 @@ export class RecipeAddComponent implements OnInit {
 
     console.log(recipe);
     this.recipeService.saveRecipe(recipe);
+    this.router.navigate(['/']);
   }
 }
