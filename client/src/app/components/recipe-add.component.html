@@ -20,8 +20,9 @@
             class="btn btn-default"
             type="button"
             (click)="onAddIngredient()"
+            matSuffix
           >
-            Add Ingredient
+            +
           </button>
         </span></mat-card-title
       >
@@ -93,7 +94,8 @@
         type="button"
         class="add"
         title="add recipe"
-        (click)="saveRecipe()"
+        (click)="submitForm()"
+        [disabled]="!form.valid"
       >
         Add
       </button>

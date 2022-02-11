@@ -34,7 +34,7 @@ public class RecipesRestController {
 
     recipes.stream().forEach(recipe -> arrBuilder.add(Json.createObjectBuilder()
         .add("id", recipe.getId())
-        .add("name", recipe.getTitle())
+        .add("title", recipe.getTitle())
         .build()));
 
     JsonArray recipesJsonArray = arrBuilder.build();

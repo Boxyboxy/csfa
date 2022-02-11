@@ -1,3 +1,4 @@
+import { RecipeService } from './../recipe.service';
 import { Component, OnInit } from '@angular/core';
 import {
   FormArray,
@@ -7,6 +8,8 @@ import {
   Validators,
 } from '@angular/forms';
 
+import { Recipe } from '../models';
+
 @Component({
   selector: 'app-recipe-add',
   templateUrl: './recipe-add.component.html',
@@ -15,7 +18,7 @@ import {
 export class RecipeAddComponent implements OnInit {
   form!: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private recipeService: RecipeService) {}
 
   ngOnInit(): void {
     this.form = this.createForm();
@@ -27,7 +30,10 @@ export class RecipeAddComponent implements OnInit {
       ingredients: this.fb.array([
         new FormControl('', [Validators.required, Validators.minLength(3)]),
       ]),
-      instruction: this.fb.control('', [Validators.required]),
+      instruction: this.fb.control('', [
+        Validators.required,
+        Validators.minLength(3),
+      ]),
       image: this.fb.control('', [Validators.required]),
     });
   }
@@ -49,5 +55,28 @@ export class RecipeAddComponent implements OnInit {
     (<FormArray>this.form.get('ingredients')).removeAt(i);
   }
 
-  saveRecipe() {}
+  createId(length: number): string {
+    let result = '';
+    let characters =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
+    }
+    return result;
+  }
+
+  submitForm() {
+    let recipe: Recipe = {
+      id: this.createId(5),
+      title: this.form.value.name,
+      ingredients: this.form.value.ingredients,
+      instruction: this.form.value.instruction,
+      image: this.form.value.image,
+    };
+
+    console.log(recipe);
+    this.recipeService.saveRecipe(recipe);
+  }
 }

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { RECIPES } from './mock-recipes';
@@ -21,6 +21,19 @@ export class RecipeService {
   getRecipe(recipeId: string): Observable<Recipe> {
     return this.httpClient.get<Recipe>(
       `http://localhost:8080/api/recipe/${recipeId}`
+    );
+  }
+
+  saveRecipe(recipe: Recipe): Observable<any> {
+    const httpHeaders = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Accept', 'application/json');
+    return this.httpClient.post(
+      'http://localhost:8080/api/recipe',
+      JSON.stringify(recipe),
+      {
+        headers: httpHeaders,
+      }
     );
   }
 }
